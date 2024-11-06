@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortiGate Address Object Creator</title>
+</head>
+<body>
+    <h2>FortiGate Address Object Creator</h2>
+    <form id="addressForm">
+        <label for="apiKey">API Key:</label><br>
+        <input type="password" id="apiKey" name="apiKey" required><br><br>
+        <label for="name">Address Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="ip">IP Address:</label><br>
+        <input type="text" id="ip" name="ip" required><br><br>
+        <button type="submit">Create Address Object</button>
+    </form>
+    <script>
+        document.getElementById('addressForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const apiKey = document.getElementById('apiKey').value;
+            const name = document.getElementById('name').value;
+            const ip = document.getElementById('ip').value;
+
+            const response = await fetch('/create-address', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ apiKey, name, ip })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+    </script>
+</body>
+</html>
